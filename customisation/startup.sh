@@ -34,14 +34,14 @@ function terminate_the_services() {
 }
 trap 'terminate_the_services' SIGTERM SIGINT
 
-function cache_files_that_cause_a_restart() {
+function cache_file_changes_that_cause_a_restart() {
 	config_count=$(rsync -a --stats /home/site/wwwroot/configuration/standalone.xml /opt/jboss/wildfly/customisation/configuration 2>&1 | grep "transferred:" | grep -E -o "([0-9]+)")
 	if [ -z "$config_count" ]; then config_count=0; fi
 
 	module_count=$(rsync -a --stats /home/site/wwwroot/modules/ /opt/jboss/wildfly/customisation/modules 2>&1 | grep "transferred:" | grep -E -o "([0-9]+)")
 	if [ -z "$module_count" ]; then module_count=0; fi
 
-	config_changes=`expr $config_count + $module_count`
+	file_changes_that_cause_a_restart=`expr $config_count + $module_count`
 	config_count=0
 	module_count=0
 }
@@ -56,10 +56,10 @@ function apply_all_the_file_changes() {
 
 # Loop until we receive an interrupt or terminate signal
 while [ -z "$terminate" ]; do 
-	cache_files_that_cause_a_restart
+	cache_file_changes_that_cause_a_restart
 
 	# If there are config changes and Wildfly is running, stop the services
-	if [ $config_changes -gt 0 ] && [ ! -z "$wildfly_pid" ]; then
+	if [ $file_changes_that_cause_a_restart -gt 0 ] && [ ! -z "$wildfly_pid" ]; then
 		stop_the_services
 	fi
 
