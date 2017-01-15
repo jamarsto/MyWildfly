@@ -27,6 +27,7 @@ function stop_the_services() {
 	fi
 
 	unset wildfly_pid
+	unset restart_requested
 }
 
 function terminate_the_services() {
@@ -35,7 +36,7 @@ function terminate_the_services() {
 trap 'terminate_the_services' SIGINT SIGQUIT SIGILL SIGABRT SIGFPE SIGTERM SIGSTP
 
 function cause_a_service_restart() {
-	file_changes_that_cause_a_restart=1
+	restart_requested=1
 }
 trap 'cause_a_service_restart' SIGHUP
 
@@ -63,8 +64,9 @@ function apply_all_the_file_changes() {
 while [ -z "$terminate" ]; do 
 	cache_file_changes_that_cause_a_restart
 
-	# If there are config changes and Wildfly is running, stop the services
-	if [ $file_changes_that_cause_a_restart -gt 0 ] && [ ! -z "$wildfly_pid" ]; then
+	# If there are file changes that cause a restart or a restart
+	# has been requested, and Wildfly is running, stop the services
+	if [[ $file_changes_that_cause_a_restart -gt 0 ] || [ ! -z "$restart_requsted"]]&& [ ! -z "$wildfly_pid" ]; then
 		stop_the_services
 	fi
 
