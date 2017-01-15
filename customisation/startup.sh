@@ -30,9 +30,14 @@ function stop_the_services() {
 }
 
 function terminate_the_services() {
-  terminate=1
+ 	terminate=1
 }
-trap 'terminate_the_services' SIGTERM SIGINT
+trap 'terminate_the_services' SIGINT SIGQUIT SIGILL SIGABRT SIGFPE SIGTERM SIGSTP
+
+function cause_a_service_restart() {
+	file_changes_that_cause_a_restart=1
+}
+trap 'cause_a_service_restart' SIGHUP
 
 function cache_file_changes_that_cause_a_restart() {
 	config_count=$(rsync -a --stats /home/site/wwwroot/configuration/standalone.xml /opt/jboss/wildfly/customisation/configuration 2>&1 | grep "transferred:" | grep -E -o "([0-9]+)")
