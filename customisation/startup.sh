@@ -33,7 +33,7 @@ function stop_the_services() {
 function terminate_the_services() {
  	terminate=1
 }
-trap 'terminate_the_services' SIGINT SIGQUIT SIGILL SIGABRT SIGFPE SIGTERM
+trap 'terminate_the_services' SIGINT SIGQUIT SIGILL SIGABRT SIGFPE SIGTERM SIGTSTP
 
 function cause_a_service_restart() {
 	restart_requested=1
