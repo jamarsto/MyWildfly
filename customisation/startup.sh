@@ -1,4 +1,6 @@
 function start_the_services() {
+	unset restart_requested
+
 	/opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 &
 	wildfly_pid=$!
 
