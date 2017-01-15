@@ -43,7 +43,7 @@ function cause_a_service_restart() {
 trap 'cause_a_service_restart' SIGHUP
 
 function cache_file_changes_that_cause_a_restart() {
-	config_count=$(rsync -a --stats /home/site/wwwroot/configuration/standalone.xml /opt/jboss/wildfly/customisation/configuration 2>&1 | grep "transferred:" | grep -E -o "([0-9]+)")
+	config_count=$(rsync -a --stats /home/site/wwwroot/configuration/ /opt/jboss/wildfly/customisation/configuration 2>&1 | grep "transferred:" | grep -E -o "([0-9]+)")
 	if [ -z "$config_count" ]; then config_count=0; fi
 
 	module_count=$(rsync -a --stats /home/site/wwwroot/modules/ /opt/jboss/wildfly/customisation/modules 2>&1 | grep "transferred:" | grep -E -o "([0-9]+)")
@@ -55,7 +55,7 @@ function cache_file_changes_that_cause_a_restart() {
 }
 
 function apply_all_the_file_changes() {
-	rsync -a /opt/jboss/wildfly/customisation/configuration/standalone.xml /opt/jboss/wildfly/standalone/configuration &> /dev/null
+	rsync -a /opt/jboss/wildfly/customisation/configuration/ /opt/jboss/wildfly/standalone/configuration &> /dev/null
 
 	rsync -a /opt/jboss/wildfly/customisation/modules/ /opt/jboss/wildfly/modules/system/layers/base &> /dev/null
 
