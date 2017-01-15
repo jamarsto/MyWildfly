@@ -77,7 +77,6 @@ while [ -z "$terminate" ]; do
 	# If Wildfly is not running, start the services
 	if [ -z "$wildfly_pid" ]; then
 		start_the_services
-		cp /opt/jboss/wildfly/standalone/configuration/standalone.xml /home/standalone.xml
 	fi
 
 	sleep 10
