@@ -55,9 +55,9 @@ function cache_file_changes_that_cause_a_restart() {
 }
 
 function apply_all_the_file_changes() {
-	rsync -a --stats /opt/jboss/wildfly/customisation/configuration/standalone.xml /opt/jboss/wildfly/standalone/configuration &> /dev/null
+	rsync -a /opt/jboss/wildfly/customisation/configuration/standalone.xml /opt/jboss/wildfly/standalone/configuration &> /dev/null
 
-	rsync -a --stats /opt/jboss/wildfly/customisation/modules/ /opt/jboss/wildfly/modules/system/layers/base &> /dev/null
+	rsync -a /opt/jboss/wildfly/customisation/modules/ /opt/jboss/wildfly/modules/system/layers/base &> /dev/null
 
 	rsync -a --include='*/' --include='*.war' --include='*.ear' --exclude='*' /home/site/wwwroot/deployments /opt/jboss/wildfly/standalone/deployments &> /dev/null
 }
