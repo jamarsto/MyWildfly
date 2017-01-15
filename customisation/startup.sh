@@ -66,7 +66,7 @@ while [ -z "$terminate" ]; do
 
 	# If there are file changes that cause a restart or a restart
 	# has been requested, and Wildfly is running, stop the services
-	if [[ $file_changes_that_cause_a_restart -gt 0 ] || [ ! -z "$restart_requsted"]]&& [ ! -z "$wildfly_pid" ]; then
+	if [[ $file_changes_that_cause_a_restart -gt 0 ] || [ ! -z "$restart_requsted"]] && [ ! -z "$wildfly_pid" ]; then
 		stop_the_services
 	fi
 
