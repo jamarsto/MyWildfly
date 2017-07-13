@@ -2,7 +2,7 @@
 function start_the_services() {
 	unset restart_requested
 
-	/opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 &
+	/opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 &> /dev/null &
 	wildfly_pid=$!
 
 	until `/opt/jboss/wildfly/bin/jboss-cli.sh -c "ls /deployment" &> /dev/null`; do
