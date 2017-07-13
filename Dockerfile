@@ -11,6 +11,6 @@ RUN chown root:root /etc/ssh/sshd_config
 COPY httpd.conf /etc/httpd/conf
 RUN chown root:root /etc/httpd/conf/httpd.conf
 ADD customisation /opt/jboss/wildfly/customisation
-RUN chown -R root:root /opt/jboss/wildfly/customisation
+RUN chown -R jboss:	root /opt/jboss/wildfly/customisation
 EXPOSE 2222 80
 ENTRYPOINT /opt/jboss/wildfly/customisation/startup.sh
