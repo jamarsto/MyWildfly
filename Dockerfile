@@ -6,9 +6,11 @@ RUN rm -rf /opt/jboss/wildfly/standalone/deployments/* && rm -rf /opt/jboss/wild
 RUN echo "root:Docker!" | chpasswd && /usr/bin/ssh-keygen -A
 RUN mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && chown -R root:root ~/.ssh && chmod -R 700 ~/.ssh 
 COPY sshd_config /etc/ssh/
-RUN chown -R root:root /etc/ssh/sshd_config
+RUN chown root:root /etc/ssh/sshd_config
 
 COPY httpd.conf /etc/httpd/conf
+RUN chown root:root /etc/httpd/conf/httpd.conf
 ADD customisation /opt/jboss/wildfly/customisation
+RUN chown -R root:root /opt/jboss/wildfly/customisation
 EXPOSE 2222 80
 ENTRYPOINT /opt/jboss/wildfly/customisation/startup.sh
