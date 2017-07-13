@@ -1,3 +1,4 @@
+#!/bin/bash
 function start_the_services() {
 	unset restart_requested
 
@@ -61,6 +62,8 @@ function apply_all_the_file_changes() {
 
 	rsync -a --include='*/' --include='*.war' --include='*.ear' --exclude='*' /home/site/wwwroot/deployments /opt/jboss/wildfly/standalone/deployments &> /dev/null
 }
+
+/usr/sbin/sshd 
 
 # Loop until we receive an interrupt or terminate signal
 while [ -z "$terminate" ]; do 
